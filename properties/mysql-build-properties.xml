@@ -8,7 +8,7 @@
 
 
   <property name="PROPERTIESFILE" value="properties/mysql-sample-properties.xml"/>
-  <property name="MYSQLDRIVER" value="~/projects/mysql/current/mysql-connector-java-5.1.46-bin.jar"/>
+  <property name="MYSQLDRIVER" value="lib/mysql-connector-java-5.1.46-bin.jar"/>
 
   <path id="CLASSPATH">
     <pathelement location="classes"/>
