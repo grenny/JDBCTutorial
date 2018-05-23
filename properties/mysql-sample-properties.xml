@@ -4,9 +4,9 @@
 
   <entry key="dbms">mysql</entry>
   <entry key="driver">com.mysql.jdbc.Driver</entry>
-  <entry key="database_name">testdb</entry>
-  <entry key="user_name">root</entry>
-  <entry key="password">root</entry>
+  <entry key="database_name">mysql_tutorial</entry>
+  <entry key="user_name">mysql_tutorial</entry>
+  <entry key="password">4M1@#$l13</entry>
   <entry key="server_name">localhost</entry>
   <entry key="port_number">3306</entry>
 
