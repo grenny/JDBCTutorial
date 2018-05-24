@@ -43,12 +43,16 @@ import java.sql.BatchUpdateException;
 import java.sql.DatabaseMetaData;
 import java.sql.RowIdLifetime;
 import java.sql.SQLWarning;
+import javax.sql.CommonDataSource;
+import javax.sql.DataSource;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
+
+import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 import org.w3c.dom.Document;
 
 public class JDBCTutorialUtilities {
@@ -324,6 +328,16 @@ public class JDBCTutorialUtilities {
     return conn;
   }
 
+  public Connection getDatasourceConnection() throws SQLException {
+    System.out.println("Creating connection with DataSource");
+    final MysqlDataSource dataSource = new MysqlDataSource();
+    dataSource.setServerName(this.serverName);
+    dataSource.setDatabaseName(this.dbName);
+
+    final Connection connection = dataSource.getConnection(userName, password);
+    connection.setCatalog(this.dbName);
+    return connection;
+  }
 
   public static void createDatabase(Connection connArg, String dbNameArg,
                                     String dbmsArg) {

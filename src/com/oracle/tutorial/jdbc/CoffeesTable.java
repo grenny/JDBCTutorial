@@ -370,8 +370,8 @@ public class CoffeesTable {
     }
 
     try {
-      myConnection = myJDBCTutorialUtilities.getConnection();
-
+//      myConnection = myJDBCTutorialUtilities.getConnection();
+        myConnection = myJDBCTutorialUtilities.getDatasourceConnection();
       // Java DB does not have an SQL create database command; it does require createDatabase
 //      JDBCTutorialUtilities.createDatabase(myConnection,
 //                                           myJDBCTutorialUtilities.dbName,
