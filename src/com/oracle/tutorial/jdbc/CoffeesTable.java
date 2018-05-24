@@ -274,27 +274,24 @@ public class CoffeesTable {
   }
   
   public static void viewTable(Connection con) throws SQLException {
-    Statement stmt = null;
     String query = "select COF_NAME, SUP_ID, PRICE, SALES, TOTAL from COFFEES";
-    try {
-      stmt = con.createStatement();
-      ResultSet rs = stmt.executeQuery(query);
 
-      while (rs.next()) {
-        String coffeeName = rs.getString("COF_NAME");
-        int supplierID = rs.getInt("SUP_ID");
-        float price = rs.getFloat("PRICE");
-        int sales = rs.getInt("SALES");
-        int total = rs.getInt("TOTAL");
-        System.out.println(coffeeName + ", " + supplierID + ", " + price +
-                           ", " + sales + ", " + total);
-      }
+    try(Statement stmt = con.createStatement()) {
+        final ResultSet resultSet = stmt.executeQuery(query);
 
-    } catch (SQLException e) {
+        while (resultSet.next()) {
+            final String coffeeName = resultSet.getString("COF_NAME");
+            final int supplierId = resultSet.getInt("SUP_ID");
+            final float price = resultSet.getFloat("PRICE");
+            final int sales = resultSet.getInt("SALES");
+            final int total = resultSet.getInt("TOTAL");
+            System.out.println(coffeeName + ", " + supplierId + " , " + price +
+            ", " + sales + ", " + total);
+        }
+    } catch( SQLException e) {
       JDBCTutorialUtilities.printSQLException(e);
-    } finally {
-      if (stmt != null) { stmt.close(); }
     }
+
   }
 
   public static void alternateViewTable(Connection con) throws SQLException {
