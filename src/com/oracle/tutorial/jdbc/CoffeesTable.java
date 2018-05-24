@@ -99,6 +99,42 @@ public class CoffeesTable {
     }
   }
 
+  public void updateCoffeeSalesWithResources(HashMap<String, Integer> salesForWeek) throws SQLException {
+      String updateString =
+              "update COFFEES " + "set SALES = ? where COF_NAME = ?";
+
+      String updateStatement =
+              "update COFFEES " + "set TOTAL = TOTAL + ? where COF_NAME = ?";
+
+      try( PreparedStatement updateSales = con.prepareStatement(updateString);
+            PreparedStatement updateTotal = con.prepareStatement(updateStatement)) {
+          con.setAutoCommit(false);
+
+          for (Map.Entry<String, Integer> e : salesForWeek.entrySet()) {
+              updateSales.setInt(1, e.getValue().intValue());
+              updateSales.setString(2, e.getKey());
+              updateSales.executeUpdate();
+
+              updateTotal.setInt(1, e.getValue().intValue());
+              updateTotal.setString(2, e.getKey());
+              updateTotal.executeUpdate();
+              con.commit();
+          }
+      } catch (SQLException e) {
+          JDBCTutorialUtilities.printSQLException(e);
+          if(con != null) {
+              System.err.println("Rolling back txn.");
+              try {
+                  con.rollback();
+              } catch (SQLException sqe) {
+                  JDBCTutorialUtilities.printSQLException(sqe);
+              }
+          }
+      } finally {
+          con.setAutoCommit(true);
+      }
+
+  }
 
   public void updateCoffeeSales(HashMap<String, Integer> salesForWeek) throws SQLException {
 
@@ -403,7 +439,8 @@ public class CoffeesTable {
       salesCoffeeWeek.put("Espresso", 60);
       salesCoffeeWeek.put("Colombian_Decaf", 155);
       salesCoffeeWeek.put("French_Roast_Decaf", 90);
-      myCoffeeTable.updateCoffeeSales(salesCoffeeWeek);
+//      myCoffeeTable.updateCoffeeSales(salesCoffeeWeek);
+        myCoffeeTable.updateCoffeeSalesWithResources(salesCoffeeWeek);
       CoffeesTable.viewTable(myConnection);
 
       System.out.println("\nModifying prices by percentage");
